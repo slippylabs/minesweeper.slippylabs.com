@@ -403,3 +403,43 @@ h1 {
 .callsign-row { flex-wrap: wrap; }
 .callsign { min-width: 0; }
 .nav-links { flex-wrap: wrap; }
+
+/* blip-pulse is referenced by .tag.unstable in every one of these stylesheets
+   (and by the live-event markers on the hub) but was never actually defined
+   anywhere on the estate, so all of it has been silently static. Defining it
+   here is what makes those pulses real. A gentler curve than comm-blink's hard
+   50%-opacity blink: this marks "live", it should not flicker. */
+@keyframes blip-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ---- featured nav link -----------------------------------------------------
+   The tournaments link is the one item in this row worth noticing, so it gets
+   the accent treatment while Rules and Luck Games stay quiet. The sitewide
+   prefers-reduced-motion rule at the top of this file switches the dot's
+   animation off for anyone who asks for that. */
+.logout-link.featured {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--hud-green);
+  border-color: var(--hud-green);
+  background: rgba(57, 255, 143, 0.12);
+  box-shadow: 0 0 10px rgba(57, 255, 143, 0.18), inset 0 0 12px rgba(57, 255, 143, 0.05);
+  font-weight: bold;
+}
+.logout-link.featured::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--hud-green);
+  box-shadow: 0 0 6px var(--hud-green);
+  animation: blip-pulse 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.logout-link.featured:hover {
+  color: var(--text-main);
+  background: rgba(57, 255, 143, 0.24);
+}
