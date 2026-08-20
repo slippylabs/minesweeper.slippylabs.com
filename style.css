@@ -391,3 +391,15 @@ h1 {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
+
+/* ---- header row wrapping ---------------------------------------------------
+   .callsign-row never wrapped and .callsign carried the default min-width:auto,
+   so the row could not shrink below the callsign's longest word. Adding the
+   Tournaments link pushed the nav past the right edge on a 360px phone, with
+   "Luck Games" clipped mid-word and no way to reach it (the page itself does
+   not scroll sideways). Letting the callsign shrink and the row wrap drops the
+   nav onto its own line instead. No effect on desktop, where the row still
+   fits on one line and never wraps. Same fix as the hub's. */
+.callsign-row { flex-wrap: wrap; }
+.callsign { min-width: 0; }
+.nav-links { flex-wrap: wrap; }
