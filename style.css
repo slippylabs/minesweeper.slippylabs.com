@@ -443,3 +443,37 @@ h1 {
   color: var(--text-main);
   background: rgba(57, 255, 143, 0.24);
 }
+
+
+/* ---- phone-sized touch targets: header nav chips (2026-08-21) --------------
+   These chips render 24-30px tall, well under the ~44px a thumb reliably hits.
+   The tool subdomains have carried this since 2026-08-13; the games, casino
+   and hub pages never picked it up. Scoped to the phone breakpoint, so the
+   desktop layout is untouched. Keep this block in sync across subdomains. */
+.login-btn, .logout-link, .home-link, .rules-link, .back-home-link {
+  touch-action: manipulation;
+}
+@media (max-width: 560px) {
+  .login-btn, .logout-link, .home-link, .rules-link, .back-home-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* The header is one nowrap flex line, so the chips run off the right edge on
+     a narrow phone -- and once signed in the label grows to "Logout (username)"
+     and pushes the last chip out of reach on every one of these pages. Let the
+     row wrap instead; where it already fits, wrap changes nothing. */
+  .callsign-row, .nav-links { flex-wrap: wrap; }
+  /* .nav-links is flex-shrink:0, so it holds its max-content width and the
+     last chip lands past the right edge -- wrapping cannot help until the row
+     is allowed to shrink below that width. */
+  .nav-links { flex-shrink: 1; min-width: 0; max-width: 100%; }
+  .login-btn, .logout-link {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
